@@ -1,0 +1,12 @@
+/* 
+  ErrorMessage.strings
+  TransloaditLib
+
+  Created by Szabó Tamás on 2014.01.18..
+  Copyright (c) 2014 Synthesis-Net. All rights reserved.
+*/
+
+"4121"="Invalid key was tried to be set";
+"4122"="Key is already defined";
+"4123"="Data not parseable with the given parser.";
+"4124"="Response not valid.";
