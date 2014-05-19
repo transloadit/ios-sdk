@@ -99,6 +99,8 @@
 -(void)setAuthExpires:(NSDate*)dateTime
 {
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    NSTimeZone *timeZone = [NSTimeZone timeZoneWithName:@"UTC"];
+	[dateFormatter setTimeZone:timeZone];
     [dateFormatter setDateFormat:@"yyyy/MM/dd HH:mm:ss+00:00"];
     
 	[auth setObject:[dateFormatter stringFromDate:dateTime] forKey:@"expires"];
