@@ -3,7 +3,7 @@
 //  TransloaditLib
 //
 //  Created by Szabó Tamás on 2014.01.21..
-//  Copyright (c) 2014 Synthesis-Net. All rights reserved.
+//  Copyright (c) 2014 Transloadit Ltd. All rights reserved.
 //
 
 #import "ParsedApiData.h"

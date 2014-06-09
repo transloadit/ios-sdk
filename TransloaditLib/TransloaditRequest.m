@@ -3,8 +3,9 @@
 //  TransloaditLib
 //
 //  Created by Szabó Tamás on 2014.01.21..
-//  Copyright (c) 2014 Synthesis-Net. All rights reserved.
+//  Copyright (c) 2014 Transloadit Ltd. All rights reserved.
 //
+//  Updated by Mike Llewellyn (mike@calvir.com) on 9 June 2014
 
 #import "TransloaditRequest.h"
 #import "DefaultHttpExecutor.h"
@@ -34,7 +35,7 @@
     
     NSString* response=[executor execute:[[ParsedApiData alloc] initWithApiData:[self getData] parser:[self getParser]] withError:error];
     
-    if(error!=nil)
+    if(error!=nil || !response)
     {
         TRANSLOADIT_LOG_ERROR(self.class, error);
         

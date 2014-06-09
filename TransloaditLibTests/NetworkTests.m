@@ -3,7 +3,7 @@
 //  NetworkTests
 //
 //  Created by Szabó Tamás on 2014.01.17..
-//  Copyright (c) 2014 Synthesis-Net. All rights reserved.
+//  Copyright (c) 2014 Transloadit Ltd. All rights reserved.
 //
 
 #import <XCTest/XCTest.h>
