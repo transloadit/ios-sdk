@@ -91,7 +91,7 @@
     if ([data.files count] != 0 || [data.fields count] != 0) {
         [req setHTTPBody:body];
     }
-    req.timeoutInterval = self.defaultRequestTimeout;
+    req.timeoutInterval = self.defaultRequestTimeout + (([[url absoluteString] rangeOfString:@"bored"].location == NSNotFound) ? 180 : 0);
     NSData *returnData = [NSURLConnection sendSynchronousRequest:req returningResponse:nil error:&error];
 
     NSString *returnString = nil;
