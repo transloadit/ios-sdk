@@ -11,39 +11,35 @@
 
 @implementation ParsedApiData
 
-@synthesize fields,files;
+@synthesize fields, files;
 
--(id)initWithApiData:(ApiData*)data parser:(NSObject<IRequestParser>*)parser
+- (id)initWithApiData:(ApiData *)data parser:(NSObject<IRequestParser> *)parser
 {
-    if (self = [super init])
-    {
-        fields=[[NSMutableDictionary alloc] init];
-        files=[[NSMutableDictionary alloc] init];
-        
-        if(data!=nil)
-		{
-			[files addEntriesFromDictionary:data.files];
+    if (self = [super init]) {
+        fields = [[NSMutableDictionary alloc] init];
+        files = [[NSMutableDictionary alloc] init];
+
+        if (data != nil) {
+            [files addEntriesFromDictionary:data.files];
             [fields addEntriesFromDictionary:data.fields];
-			
-			[parser setRequest:data.params];
-			
-            NSError* error=nil;
-            
-            NSString* parsed=[parser parseWithError:error];
-            
-            if(error==nil)
-            {
-            	
-                [fields setObject:parsed forKey:@"params"];
-                
-            }else
-            {
-			
-				TRANSLOADIT_LOG_ERROR(self.class, error);
-			}
-		}
+
+            [parser setRequest:data.params];
+
+            NSError *error = nil;
+            NSString *parsed = [parser parseWithError:&error];
+
+            if (error == nil) {
+
+                if (parsed)
+                    [fields setObject:parsed forKey:@"params"];
+
+            } else {
+
+                TRANSLOADIT_LOG_ERROR(self.class, error);
+            }
+        }
     }
-    
+
     return self;
 }
 

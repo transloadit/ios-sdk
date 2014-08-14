@@ -12,72 +12,46 @@
 
 @implementation TransloaditResponse
 
+//- (id)initWithString:(NSString *)someString andParser:(NSObject<IResponseParser> *)parser
+//{
+//    if (self = [super init]) {
+//        success = false;
+//        responseString = someString;
+//        [parser setResponse:responseString];
+//
+//        NSError *error = nil;
+//        data = [parser parseWithError:&error];
+//
+//        if (error == nil && [data objectForKey:@"ok"] != nil) {
+//            success = true;
+//        } else {
+//            TRANSLOADIT_LOG_ERROR(self.class, error);
+//        }
+//    }
+//
+//    return self;
+//}
 
--(id)init:(NSString*)_responseString withParser:(NSObject<IResponseParser>*)parser withError:(NSError*)error;
+- (id)initWithString:(NSString *)someString;
 {
-    if (self = [super init])
-	{
-        success=false;
-        
-        responseString=_responseString;
-        
-        [parser setResponse:responseString];
-        
-        data=[parser parseWithError:error];
-        
-        if(error==nil && [data objectForKey:@"ok"]!=nil)
-        {
+    if (self = [super init]) {
+        success = false;
+        responseString = someString;
+
+        NSObject<IResponseParser> *parser = [[JSONResponseParser alloc] initWithString:responseString];
+        data = [parser parse];
+
+        if (data && [data objectForKey:@"ok"] != nil) {
             success = true;
-        }else
-        {
-            TRANSLOADIT_LOG_ERROR(self.class, error);
         }
     }
-    
     return self;
-    
 }
 
--(id)init:(NSString*)_responseString withError:(NSError*)error
-{
-    if (self = [super init])
-	{
-        success=false;
-        
-        responseString=_responseString;
-        
-        NSObject<IResponseParser>* parser=[[JSONResponseParser alloc] init];
-        
-        [parser setResponse:responseString];
-        
-        data=[parser parseWithError:error];
-        
-        if(error==nil && [data objectForKey:@"ok"]!=nil)
-        {
-            success = true;
-        }else
-        {
-            TRANSLOADIT_LOG_ERROR(self.class, error);
-        }
-    }
-    
-    return self;
-    
-}
+- (NSString *)getResponseString { return responseString; }
 
--(NSString*)getResponseString
-{
-    return responseString;
-}
+- (NSDictionary *)getData { return data; }
 
--(NSDictionary*)getData
-{
-    return data;
-}
-
--(bool)isSuccess
-{
-    return success;
-}
+- (bool)isSuccess { return success; }
 
 @end

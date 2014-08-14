@@ -11,44 +11,29 @@
 
 @implementation JSONResponseParser
 
-
--(id)init:(NSString*)_response
+- (id)initWithString:(NSString *)something
 {
-    if (self = [super init])
-    {
-    	response = _response;
+    if (self = [super init]) {
+        response = something;
     }
-    
     return self;
 }
 
--(id)init
-{
-    self = [super init];
-    
-    return self;
-}
+- (NSString *)getResponse { return response; }
 
+- (void)setResponse:(NSString *)_response { response = _response; }
 
--(NSString*)getResponse
+- (NSDictionary *)parse
 {
-    return response;
-}
+    if (!response)
+        return nil;
 
--(void)setResponse:(NSString*)_response
-{
-    response=_response;
-}
-
--(NSDictionary*)parseWithError:(NSError *)error
-{
+    NSError *error = nil;
     NSDictionary *jsonDict = [NSJSONSerialization JSONObjectWithData:[response dataUsingEncoding:NSASCIIStringEncoding] options:kNilOptions error:&error];
-    
-    if(jsonDict==nil || error!=nil)
-    {
+    if (jsonDict == nil || error != nil) {
         TRANSLOADIT_LOG_ERROR(self.class, error);
+        return nil;
     }
-    
     return jsonDict;
 }
 

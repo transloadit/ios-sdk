@@ -30,6 +30,6 @@
  * @param data The parsed ApiData
  * @return The server response
  */
--(NSString*) execute:(ParsedApiData*)data withError:(NSError*)error;
+-(NSString*) execute:(ParsedApiData*)data withError:(NSError **)error;
 
 @end

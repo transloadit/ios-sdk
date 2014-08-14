@@ -11,48 +11,42 @@
 
 @implementation JSONRequestParser
 
--(id)init:(NSDictionary*)_request
+- (id)init:(NSDictionary *)_request
 {
-    if (self = [super init])
-    {
-    	request = _request;
+    if (self = [super init]) {
+        request = _request;
     }
-    
+
     return self;
 }
 
--(id)init
+- (id)init
 {
     self = [super init];
 
     return self;
 }
 
--(NSDictionary*)getRequest
-{
-    return request;
-}
+- (NSDictionary *)getRequest { return request; }
 
--(void)setRequest:(NSDictionary*)_request
-{
-    request=_request;
-}
+- (void)setRequest:(NSDictionary *)_request { request = _request; }
 
--(NSString*)parseWithError:(NSError *)error
+- (NSString *)parseWithError:(NSError **)error
 {
-    NSString *jsonString=nil;
-    
-    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:request options:0  error:&error];
-    
-    if (!jsonData || error!=nil)
-    {
-        TRANSLOADIT_LOG_ERROR(self.class, error);
-       
-    }else
-    {
-       jsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+    NSString *jsonString = nil;
+
+    NSError *localError = nil;
+    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:request options:0 error:&localError];
+    if (error)
+        *error = localError;
+
+    if (!jsonData || localError != nil) {
+        TRANSLOADIT_LOG_ERROR(self.class, localError);
+
+    } else {
+        jsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
     }
-    
+
     return jsonString;
 }
 

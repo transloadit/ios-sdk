@@ -15,74 +15,47 @@
 
 @implementation TransloaditRequest
 
--(id)init
+- (id)init
 {
-	if (self = [super init])
-	{
-        url=[[NSURL alloc] initWithScheme:DEFAULT_SCHEME host:DEFAULT_HOST path:ASSEMBLY_ROOT];
-	}
+    if (self = [super init]) {
+        url = [[NSURL alloc] initWithScheme:DEFAULT_SCHEME host:DEFAULT_HOST path:ASSEMBLY_ROOT];
+    }
 
-	return self;
+    return self;
 }
 
--(NSObject<IApiResponse>*)executeWithError:(NSError *)error
+- (NSObject<IApiResponse> *)executeWithError:(NSError **)error
 {
-    DefaultHttpExecutor* executor=[[DefaultHttpExecutor alloc] init];
-    
+    DefaultHttpExecutor *executor = [[DefaultHttpExecutor alloc] init];
     [executor setUrl:[self getURL]];
-    
     [executor setMethod:[self getMethod]];
-    
-    NSString* response=[executor execute:[[ParsedApiData alloc] initWithApiData:[self getData] parser:[self getParser]] withError:error];
-    
-    if(error!=nil || !response)
-    {
-        TRANSLOADIT_LOG_ERROR(self.class, error);
-        
+    ParsedApiData *ourData = [[ParsedApiData alloc] initWithApiData:[self getData] parser:[self getParser]];
+    NSError *localError = nil;
+    NSString *response = [executor execute:ourData withError:&localError];
+    if (error)
+        *error = localError;
+
+    if (localError != nil || !response) {
+        TRANSLOADIT_LOG_ERROR(self.class, localError);
         return nil;
     }
-    
-    return [[TransloaditResponse alloc] init:response withError:error];
-    
+    TransloaditResponse *resp = [[TransloaditResponse alloc] initWithString:response];
+    return resp;
 }
 
--(ApiData*)getData
-{
-    return data;
-}
+- (ApiData *)getData { return data; }
 
--(RequestMethod)getMethod
-{
-    return method;
-}
+- (RequestMethod)getMethod { return method; }
 
--(NSURL*)getURL
-{
-    return url;
-}
+- (NSURL *)getURL { return url; }
 
--(void)setPath:(NSString *)path
-{
-    url=[[NSURL alloc] initWithScheme:url.scheme host:url.host path:path];
-}
+- (void)setPath:(NSString *)path { url = [[NSURL alloc] initWithScheme:url.scheme host:url.host path:path]; }
 
--(void)setHost:(NSString*)host
-{
-    url=[[NSURL alloc] initWithScheme:url.scheme host:host path:url.path];
-}
+- (void)setHost:(NSString *)host { url = [[NSURL alloc] initWithScheme:url.scheme host:host path:url.path]; }
 
--(void)setMethod:(RequestMethod)_method
-{
-    method=_method;
-}
+- (void)setMethod:(RequestMethod)_method { method = _method; }
 
--(NSObject<IRequestParser>*)getParser
-{
-    return [[JSONRequestParser alloc] init];
-}
+- (NSObject<IRequestParser> *)getParser { return [[JSONRequestParser alloc] init]; }
 
--(void)setData:(ApiData*)_data
-{
-    data=_data;
-}
+- (void)setData:(ApiData *)_data { data = _data; }
 @end

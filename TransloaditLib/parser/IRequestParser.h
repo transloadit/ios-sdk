@@ -21,6 +21,6 @@
  * @return The parsed String
  * @throws NotParseableException Thrown when the request not parseable.
  */
--(NSString*)parseWithError:(NSError*)error;
+-(NSString*)parseWithError:(NSError **)error;
 
 @end

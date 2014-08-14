@@ -19,27 +19,24 @@
 
 @implementation NetworkTests
 
--(void)testNoInternetConnection
+- (void)testNoInternetConnection
 {
-    NSObject<ITransloadit>* transloadit = [[Transloadit alloc] init:API_KEY];
-	NSObject<IAssemblyBuilder>* assembly = [[AssemblyBuilder alloc] init];
-    
-    NSError* error;
-    
-    TransloaditResponse* response =[transloadit invokeAssembly:assembly withError:error];
-    
-    XCTAssertTrue(error==nil);
-    
-    if(!SIGNATURE_AUTHENTICATION)
-    {
+    NSObject<ITransloadit> *transloadit = [[Transloadit alloc] init:API_KEY];
+    NSObject<IAssemblyBuilder> *assembly = [[AssemblyBuilder alloc] init];
+
+    NSError *error;
+
+    TransloaditResponse *response = [transloadit invokeAssembly:assembly withError:&error];
+
+    XCTAssertTrue(error == nil);
+
+    if (!SIGNATURE_AUTHENTICATION) {
         XCTAssertTrue(![response isSuccess]);
-        
-        XCTAssertTrue([(NSString*)[[response getData] objectForKey:@"error"] isEqualToString:@"ASSEMBLY_NO_STEPS"]);
-    }else
-    {
-        XCTAssertTrue([(NSString*)[[response getData] objectForKey:@"error"] isEqualToString:@"NO_SIGNATURE_FIELD"]);
+
+        XCTAssertTrue([(NSString *)[[response getData] objectForKey:@"error"] isEqualToString:@"ASSEMBLY_NO_STEPS"]);
+    } else {
+        XCTAssertTrue([(NSString *)[[response getData] objectForKey:@"error"] isEqualToString:@"NO_SIGNATURE_FIELD"]);
     }
-    
 }
 
 @end
