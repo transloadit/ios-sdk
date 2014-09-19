@@ -74,7 +74,7 @@ The sample application below is part of a simple iOS application.
 	{
 		TRANSLOADIT_LOG_ERROR(self.class,error);
 		
-		retrun YES;
+		return YES;
 	}
 	
 	//Invoke assembly, and wait for the result
@@ -84,7 +84,7 @@ The sample application below is part of a simple iOS application.
 	{
 		TRANSLOADIT_LOG_ERROR_WITH_MESSAGE(self.class,@"Error has occured while completing assembly");
 		
-		retrun YES;
+		return YES;
 	}
 	
 	if([response isSuccess])
@@ -181,7 +181,7 @@ The sample application below is part of a simple iOS application.
 	{
 		TRANSLOADIT_LOG_ERROR(self.class,error);
 		
-		retrun YES;
+		return YES;
 	}
 	
 	//Add a file to be uploaded with custom key
@@ -191,7 +191,7 @@ The sample application below is part of a simple iOS application.
 	{
 		TRANSLOADIT_LOG_ERROR(self.class,error);
 		
-		retrun YES;
+		return YES;
 	}
 	
 	//Define the step, you can define more in the same assembly
@@ -221,7 +221,7 @@ The sample application below is part of a simple iOS application.
 	{
 		TRANSLOADIT_LOG_ERROR_WITH_MESSAGE(self.class,@"Error has occured while completing assembly");
 		
-		retrun YES;
+		return YES;
 	}
 	
 	if([response isSuccess])
