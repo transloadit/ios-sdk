@@ -94,7 +94,17 @@ The sample application below is part of a simple iOS application.
 	
 	if([response isSuccess])
 	{
-		TRANSLOADIT_LOG_INFO(self.class,@"Assembly %@ result",[[response getData] objectForKey:@"assembly_id"]);
+        NSDictionary *data = [response getData];
+
+        // if you have a filter robot called files like this: https://transloadit.com/demos/file-filter/decline-video-bigger-than-20mb-or-longer-than-5min
+        // then you can get a url to the original file like this (Note that results.files is an array)
+        // NSString *originalFileURL = data[@"results"][@"files"][0][@"url"];
+
+        // if you have a robot named thumbnanils like this: https://transloadit.com/demos/misc/multiple-encoding-steps-for-the-same-file
+        // then you can get the first thumbnail like this
+        // NSString *thumbnailUrl = data[@"results"][@"thumbnails"][0][@"url"];
+
+		TRANSLOADIT_LOG_INFO(self.class,@"Assembly %@ result",[data objectForKey:@"assembly_id"]);
 	}else
 	{
 		TRANSLOADIT_LOG_ERROR_WITH_MESSAGE(self.class,@"Error has occured while completing assembly");
@@ -236,7 +246,17 @@ The sample application below is part of a simple iOS application.
 	
 	if([response isSuccess])
 	{
-		TRANSLOADIT_LOG_INFO(self.class,@"Assembly %@ result",[[response getData] objectForKey:@"assembly_id"]);
+        NSDictionary *data = [response getData];
+
+        // if you have a filter robot called "files" like this: https://transloadit.com/demos/file-filter/decline-video-bigger-than-20mb-or-longer-than-5min
+        // then you can get a url to the original file like this (Note that results.files is an array)
+        // NSString *originalFileURL = data[@"results"][@"files"][0][@"url"];
+
+        // if you have a robot named "thumbnanils" like this: https://transloadit.com/demos/misc/multiple-encoding-steps-for-the-same-file
+        // the you can get the first thumbnail like this
+        // NSString *thumbnailUrl = data[@"results"][@"thumbnails"][0][@"url"];
+
+        TRANSLOADIT_LOG_INFO(self.class,@"Assembly %@ result",[data objectForKey:@"assembly_id"]);
 	}else
 	{
 		TRANSLOADIT_LOG_ERROR_WITH_MESSAGE(self.class,@"Error has occured while completing assembly");
