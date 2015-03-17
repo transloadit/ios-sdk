@@ -27,7 +27,7 @@
 
 - (void)setMethod:(RequestMethod)_method { method = _method; }
 
-- (NSString *)execute:(ParsedApiData *)data withError:(NSError *)error
+- (NSString *)execute:(ParsedApiData *)data withError:(NSError **)error
 {
 
     NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:url];
@@ -92,15 +92,17 @@
         [req setHTTPBody:body];
     }
     req.timeoutInterval = self.defaultRequestTimeout + (([[url absoluteString] rangeOfString:@"bored"].location == NSNotFound) ? 180 : 0);
-    NSData *returnData = [NSURLConnection sendSynchronousRequest:req returningResponse:nil error:&error];
+    NSError *localError = nil;
+    NSData *returnData = [NSURLConnection sendSynchronousRequest:req returningResponse:nil error:&localError];
+    if (error)
+        *error = localError;
 
     NSString *returnString = nil;
 
-    if (error != nil || !returnData) {
-        TRANSLOADIT_LOG_ERROR(self.class, error);
+    if (localError != nil || !returnData) {
+        TRANSLOADIT_LOG_ERROR(self.class, localError);
     } else {
         returnString = [[NSString alloc] initWithData:returnData encoding:NSUTF8StringEncoding];
-
         TRANSLOADIT_LOG_INFO(self.class, @"%@", returnString);
     }
 

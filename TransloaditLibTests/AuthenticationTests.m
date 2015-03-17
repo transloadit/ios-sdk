@@ -19,57 +19,49 @@
 
 @implementation AuthenticationTests
 
--(void)testAuthenticateWithExistingAccount
+- (void)testAuthenticateWithExistingAccount
 {
-    
-    NSObject<ITransloadit>* transloadit = [[Transloadit alloc] init:API_KEY];
-	NSObject<IAssemblyBuilder>* assembly = [[AssemblyBuilder alloc] init];
-    
-    NSObject<IStep>* step=[[Step alloc] init];
-    
+    NSObject<IStep> *step = [[Step alloc] init];
     [step setOptionKey:@"robot" object:@"/http/import"];
     [step setOptionKey:@"url" object:@"http://static4.wikia.nocookie.net/__cb20120716045812/deadliestfiction/images/2/24/Cthulhu-rlyeh-rising.jpg"];
 
-    [assembly addStepName:@"test" step:step];
+    NSObject<ITransloadit> *transloadit = [[Transloadit alloc] init:API_KEY];
+    NSObject<IAssemblyBuilder> *assembly = [[AssemblyBuilder alloc] init];
+   [assembly addStepName:@"test" step:step];
 
-    NSError* error;
-    
-    TransloaditResponse* response =[transloadit invokeAssembly:assembly withError:error];
-    
-    XCTAssertTrue(error==nil);
-    
-    if(!SIGNATURE_AUTHENTICATION)
-    {
-        XCTAssertTrue([(NSString*)[[response getData] objectForKey:@"ok"] isEqualToString:@"ASSEMBLY_COMPLETED"] || [(NSString*)[[response getData] objectForKey:@"ok"] isEqualToString:@"ASSEMBLY_EXECUTING"]);
-    
-    }else
-    {
-        XCTAssertTrue([(NSString*)[[response getData] objectForKey:@"error"] isEqualToString:@"NO_SIGNATURE_FIELD"]);
+    NSError *error = nil;
+    TransloaditResponse *response = [transloadit invokeAssembly:assembly withError:&error];
+
+    XCTAssertTrue(error == nil);
+
+    if (!SIGNATURE_AUTHENTICATION) {
+        XCTAssertTrue([(NSString *)[[response getData] objectForKey:@"ok"] isEqualToString:@"ASSEMBLY_COMPLETED"]
+                      || [(NSString *)[[response getData] objectForKey:@"ok"] isEqualToString:@"ASSEMBLY_EXECUTING"]);
+
+    } else {
+        XCTAssertTrue([(NSString *)[[response getData] objectForKey:@"error"] isEqualToString:@"NO_SIGNATURE_FIELD"]);
     }
-    
-    
 }
 
--(void)testAuthenticateWithNonExistingAccount
+- (void)testAuthenticateWithNonExistingAccount
 {
-    NSObject<ITransloadit>* transloadit =[[Transloadit alloc] init:@"non-existing-account"];
-    NSObject<IAssemblyBuilder>* assembly = [[AssemblyBuilder alloc] init];
-    
-    NSObject<IStep>* step=[[Step alloc] init];
-    
+    NSObject<ITransloadit> *transloadit = [[Transloadit alloc] init:@"non-existing-account"];
+    NSObject<IAssemblyBuilder> *assembly = [[AssemblyBuilder alloc] init];
+
+    NSObject<IStep> *step = [[Step alloc] init];
+
     [step setOptionKey:@"robot" object:@"/http/import"];
     [step setOptionKey:@"url" object:@"http://static4.wikia.nocookie.net/__cb20120716045812/deadliestfiction/images/2/24/Cthulhu-rlyeh-rising.jpg"];
-    
+
     [assembly addStepName:@"test" step:step];
-    
-    NSError* error;
-    
-    TransloaditResponse* response =[transloadit invokeAssembly:assembly withError:error];
-    
-    XCTAssertTrue(error==nil);
 
-    XCTAssertTrue([(NSString*)[[response getData] objectForKey:@"error"] isEqualToString:@"GET_ACCOUNT_UNKNOWN_AUTH_KEY"]);
+    NSError *error;
 
+    TransloaditResponse *response = [transloadit invokeAssembly:assembly withError:&error];
+
+    XCTAssertTrue(error == nil);
+
+    XCTAssertTrue([(NSString *)[[response getData] objectForKey:@"error"] isEqualToString:@"GET_ACCOUNT_UNKNOWN_AUTH_KEY"]);
 }
 
 @end

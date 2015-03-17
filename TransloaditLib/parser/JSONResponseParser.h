@@ -9,23 +9,15 @@
 #import <Foundation/Foundation.h>
 #import "IResponseParser.h"
 
-@interface JSONResponseParser : NSObject<IResponseParser>
-{
+@interface JSONResponseParser : NSObject <IResponseParser> {
     /**The response String*/
-    NSString* response;
-
+    NSString *response;
 }
 
 /**
  * Creates a JSONResponseParser with the given string
  * @param response The response string
  */
--(id)init:(NSString*)_response;
-
-/**
- * Creates a JSONResponseParser
- */
--(id)init;
-
+- (id)initWithString:(NSString *)something;
 
 @end

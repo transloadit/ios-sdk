@@ -14,66 +14,60 @@
 #import "TransloaditResponse.h"
 #import "ShaUtils.h"
 
-
 @interface SignatureTest : XCTestCase
 
 @end
 
 @implementation SignatureTest
 
--(void)testSecretKey
+- (void)testSecretKey
 {
-    NSObject<ITransloadit>* transloadit = [[Transloadit alloc] init:API_KEY];
-	NSObject<IAssemblyBuilder>* assembly = [[AssemblyBuilder alloc] init];
-    
+    NSObject<ITransloadit> *transloadit = [[Transloadit alloc] init:API_KEY];
+    NSObject<IAssemblyBuilder> *assembly = [[AssemblyBuilder alloc] init];
+
     [transloadit useSignature:SECRET_KEY];
-    
-    NSError* error;
-    
-    NSObject<IStep>* step=[[Step alloc] init];
-    
+
+    NSError *error;
+
+    NSObject<IStep> *step = [[Step alloc] init];
+
     [step setOptionKey:@"robot" object:@"/http/import"];
     [step setOptionKey:@"url" object:@"http://static4.wikia.nocookie.net/__cb20120716045812/deadliestfiction/images/2/24/Cthulhu-rlyeh-rising.jpg"];
-    
+
     [assembly addStepName:@"test" step:step];
-    
-    
-    TransloaditResponse* response =[transloadit invokeAssembly:assembly withError:error];
-    
-    XCTAssertTrue(error==nil);
-    
-    if(SIGNATURE_AUTHENTICATION)
-    {
-        XCTAssertTrue([(NSString*)[[response getData] objectForKey:@"ok"] isEqualToString:@"ASSEMBLY_COMPLETED"] || [(NSString*)[[response getData] objectForKey:@"ok"] isEqualToString:@"ASSEMBLY_EXECUTING"]);
-    	
+
+    TransloaditResponse *response = [transloadit invokeAssembly:assembly withError:&error];
+
+    XCTAssertTrue(error == nil);
+
+    if (SIGNATURE_AUTHENTICATION) {
+        XCTAssertTrue([(NSString *)[[response getData] objectForKey:@"ok"] isEqualToString:@"ASSEMBLY_COMPLETED"]
+                      || [(NSString *)[[response getData] objectForKey:@"ok"] isEqualToString:@"ASSEMBLY_EXECUTING"]);
     }
 }
 
--(void)testWrongSecretKey
+- (void)testWrongSecretKey
 {
-    NSObject<ITransloadit>* transloadit = [[Transloadit alloc] init:API_KEY];
-	NSObject<IAssemblyBuilder>* assembly = [[AssemblyBuilder alloc] init];
-    
+    NSObject<ITransloadit> *transloadit = [[Transloadit alloc] init:API_KEY];
+    NSObject<IAssemblyBuilder> *assembly = [[AssemblyBuilder alloc] init];
+
     [transloadit useSignature:@"wrong-secret-key"];
-    
-    NSError* error;
-    
-    NSObject<IStep>* step=[[Step alloc] init];
-    
+
+    NSError *error;
+
+    NSObject<IStep> *step = [[Step alloc] init];
+
     [step setOptionKey:@"robot" object:@"/http/import"];
     [step setOptionKey:@"url" object:@"http://static4.wikia.nocookie.net/__cb20120716045812/deadliestfiction/images/2/24/Cthulhu-rlyeh-rising.jpg"];
-    
+
     [assembly addStepName:@"test" step:step];
-    
-    
-    TransloaditResponse* response =[transloadit invokeAssembly:assembly withError:error];
-    
-    XCTAssertTrue(error==nil);
-    
-    if(SIGNATURE_AUTHENTICATION)
-    {
-        XCTAssertTrue([(NSString*)[[response getData] objectForKey:@"error"] isEqualToString:@"INVALID_SIGNATURE"]);
-    	
+
+    TransloaditResponse *response = [transloadit invokeAssembly:assembly withError:&error];
+
+    XCTAssertTrue(error == nil);
+
+    if (SIGNATURE_AUTHENTICATION) {
+        XCTAssertTrue([(NSString *)[[response getData] objectForKey:@"error"] isEqualToString:@"INVALID_SIGNATURE"]);
     }
 }
 

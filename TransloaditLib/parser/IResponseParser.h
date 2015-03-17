@@ -11,16 +11,16 @@
 @protocol IResponseParser <NSObject>
 
 /**Sets the response String*/
--(void)setResponse:(NSString*)response;
+- (void)setResponse:(NSString *)response;
 
 /**Gets the response String*/
--(NSString*)getResponse;
+- (NSString *)getResponse;
 
 /**
  * Parse the request
  * @return The parsed Map
  * @throws NotParseableException Thrown when the request not parseable.
  */
--(NSDictionary*) parseWithError:(NSError*)error;
+- (NSDictionary *)parse;
 
 @end

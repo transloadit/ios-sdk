@@ -69,6 +69,6 @@ typedef enum
  * @param error Reference to error handling. Pass a nil reference. If no error then remain nil.
  * @return The response object
  */
--(NSObject<IApiResponse>*)executeWithError:(NSError*)error;
+-(NSObject<IApiResponse>*)executeWithError:(NSError **)error;
 
 @end

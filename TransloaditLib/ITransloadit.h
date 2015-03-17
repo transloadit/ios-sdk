@@ -28,7 +28,7 @@
  * @return Represents the whole result of the request.
  * @param error Reference to error handling. Pass a nil reference. If no error then remain nil.
  */
--(TransloaditResponse*)invokeAssembly:(NSObject<IAssemblyBuilder>*)assembly withError:(NSError*)error;
+-(TransloaditResponse*)invokeAssembly:(NSObject<IAssemblyBuilder>*)assembly withError:(NSError **)error;
 
 /**
  * Creates and gets a new TransloaditRequest instance with default attributes
@@ -43,7 +43,7 @@
  * @return Represents the whole result of the request.
  * @param error Reference to error handling. Pass a nil reference. If no error then remain nil.
  */
--(TransloaditResponse*)requestAndExecute:(TransloaditRequest*)request withError:(NSError*)error;
+-(TransloaditResponse*)requestAndExecute:(TransloaditRequest*)request withError:(NSError **)error;
 
 
 /**

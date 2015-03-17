@@ -19,50 +19,46 @@
 
 @implementation UseTemplateTests
 
--(void)testExistingTemplate
+- (void)testExistingTemplate
 {
-    NSObject<ITransloadit>* transloadit = [[Transloadit alloc] init:API_KEY];
-	NSObject<IAssemblyBuilder>* assembly = [[AssemblyBuilder alloc] init];
-    
-    NSError* error;
-    
+    NSObject<ITransloadit> *transloadit = [[Transloadit alloc] init:API_KEY];
+    NSObject<IAssemblyBuilder> *assembly = [[AssemblyBuilder alloc] init];
+
+    NSError *error;
+
     [assembly setTemplateID:TEMPLATE_ID];
-    
-    TransloaditResponse* response =[transloadit invokeAssembly:assembly withError:error];
-    
-    XCTAssertTrue(error==nil);
-    
-    if(!SIGNATURE_AUTHENTICATION)
-    {
-        XCTAssertTrue([(NSString*)[[response getData] objectForKey:@"ok"] isEqualToString:@"ASSEMBLY_COMPLETED"] || [(NSString*)[[response getData] objectForKey:@"ok"] isEqualToString:@"ASSEMBLY_EXECUTING"]);
-    	
-    }else
-    {
-        XCTAssertTrue([(NSString*)[[response getData] objectForKey:@"error"] isEqualToString:@"NO_SIGNATURE_FIELD"]);
+
+    TransloaditResponse *response = [transloadit invokeAssembly:assembly withError:&error];
+
+    XCTAssertTrue(error == nil);
+
+    if (!SIGNATURE_AUTHENTICATION) {
+        XCTAssertTrue([(NSString *)[[response getData] objectForKey:@"ok"] isEqualToString:@"ASSEMBLY_COMPLETED"]
+                      || [(NSString *)[[response getData] objectForKey:@"ok"] isEqualToString:@"ASSEMBLY_EXECUTING"]);
+
+    } else {
+        XCTAssertTrue([(NSString *)[[response getData] objectForKey:@"error"] isEqualToString:@"NO_SIGNATURE_FIELD"]);
     }
 }
 
-
--(void)testNonExistingTemplate
+- (void)testNonExistingTemplate
 {
-    NSObject<ITransloadit>* transloadit = [[Transloadit alloc] init:API_KEY];
-	NSObject<IAssemblyBuilder>* assembly = [[AssemblyBuilder alloc] init];
-    
-    NSError* error;
-    
+    NSObject<ITransloadit> *transloadit = [[Transloadit alloc] init:API_KEY];
+    NSObject<IAssemblyBuilder> *assembly = [[AssemblyBuilder alloc] init];
+
+    NSError *error;
+
     [assembly setTemplateID:@"non_existing_template_id"];
-    
-    TransloaditResponse* response =[transloadit invokeAssembly:assembly withError:error];
-    
-    XCTAssertTrue(error==nil);
-    
-    if(!SIGNATURE_AUTHENTICATION)
-    {
-        XCTAssertTrue([(NSString*)[[response getData] objectForKey:@"error"] isEqualToString:@"TEMPLATE_NOT_FOUND"]);
-    	
-    }else
-    {
-        XCTAssertTrue([(NSString*)[[response getData] objectForKey:@"error"] isEqualToString:@"NO_SIGNATURE_FIELD"]);
+
+    TransloaditResponse *response = [transloadit invokeAssembly:assembly withError:&error];
+
+    XCTAssertTrue(error == nil);
+
+    if (!SIGNATURE_AUTHENTICATION) {
+        XCTAssertTrue([(NSString *)[[response getData] objectForKey:@"error"] isEqualToString:@"TEMPLATE_NOT_FOUND"]);
+
+    } else {
+        XCTAssertTrue([(NSString *)[[response getData] objectForKey:@"error"] isEqualToString:@"NO_SIGNATURE_FIELD"]);
     }
 }
 
