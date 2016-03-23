@@ -1,3 +1,9 @@
+#Note#
+
+This is the development branch of the Transloadit SDK and Cocoapod. Several changes will take place in order to make iOS intergration more fluid and plug and play - yet easily customizable and maintainable.
+
+
+
 #Important#
 
 The Transloadit iOS SDK works with iOS 7 and Xcode 5 with ARC enabled or with any newer version.
