@@ -9,10 +9,10 @@ Pod::Spec.new do |s|
                    DESC
   s.homepage     = "https://transloadit.com"
   s.license      = { :type => "MIT", :file => "LICENSE" }
-  s.authors             = { "Tim Koschuetzki" => "tim@transloadit.com",  }
+  s.authors             = { "Tim Koschuetzki" => "tim@transloadit.com", "Mark Robert Masterson" => "Mark@Masterson.io"  }
   s.social_media_url   = "https://twitter.com/transloadit"
   s.platform     = :ios
-  s.ios.deployment_target = "7.0"
+  s.ios.deployment_target = "8.0"
   s.source       = { :git => "https://github.com/transloadit/ios-sdk.git", :tag => "1.0.0" }
   s.source_files  = "TransloaditLib/**/*.{h,m}"
   s.requires_arc = true
