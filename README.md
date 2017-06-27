@@ -457,3 +457,9 @@ To run the tests you need to fill out the Constants.h file.
 - TEMPLATE_ID template ID
 - SECRET_KEY Your secret key.
 - SIGNATURE_AUTHENTICATION Using server authentication or not. Same as the server settings.
+
+
+
+## Documentation
+
+See <a href="https://github.com/transloadit/ios-sdk/blob/master/README.md">GitHub</a> for the full documentation.
