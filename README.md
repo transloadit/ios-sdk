@@ -7,7 +7,7 @@ The Transloadit iOS SDK works with iOS 7 and Xcode 5 with ARC enabled or with an
 
 In your podfile add
 
-```pod 'TransloaditAPI'```
+```pod 'TransloaditAPI', git: 'https://github.com/transloadit/ios-sdk.git'```
 
 #Purpose#
 
