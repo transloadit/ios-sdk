@@ -1,1 +1,1 @@
-✋ This SDK is deprecated. Please use [TransloaditKit](https://github.com/transloadit/TransloaditKit).
+✋ This SDK is deprecated. Please use [TransloaditKit](https://github.com/transloadit/TransloaditKit) instead.
